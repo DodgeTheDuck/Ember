@@ -1,10 +1,10 @@
 #pragma once
 
-#include "c_common.h"
+#include "c_defs.h"
 
 namespace EmbCL {
 
-	class CStopwatch {
+	class EMB_SH_API CStopwatch {
 
 		public:
 		CStopwatch( void );

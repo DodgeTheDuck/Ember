@@ -6,8 +6,8 @@ namespace EmbCL {
 
 		public:
 
-		virtual void Tick( void ) = 0;
-		virtual void Draw( void ) = 0;
+		virtual void Tick( void );
+		virtual void Draw( void );
 
 		private:
 

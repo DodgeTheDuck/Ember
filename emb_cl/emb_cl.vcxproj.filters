@@ -18,25 +18,13 @@
     <ClInclude Include="c_core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_defs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="c_object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="c_singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="c_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="c_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_memory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="c_timing.h">
+    <ClInclude Include="c_window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,7 +35,7 @@
     <ClCompile Include="c_state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="c_timing.cpp">
+    <ClCompile Include="c_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

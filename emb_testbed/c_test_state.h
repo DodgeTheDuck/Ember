@@ -8,6 +8,7 @@ using namespace EmbCL;
 class CTestState : public IState {
 
 	public:
+	CTestState( void );
 	virtual void Tick( void );
 	virtual void Draw( void );
 

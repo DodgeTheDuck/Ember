@@ -19,24 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{06472C42-6963-4725-950E-2F781ACD5B31}</ProjectGuid>
-    <RootNamespace>emb_cl</RootNamespace>
+    <ProjectGuid>{1FF418E0-EEEA-4A54-A23E-8BE08387BE8B}</ProjectGuid>
+    <RootNamespace>emb_gl</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
-    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -45,7 +44,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -70,8 +69,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Duncan\Documents\Visual Studio 2015\Projects\Ember\emb_gl;C:\Users\Duncan\Documents\Visual Studio 2015\Projects\Ember\emb_sh;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Duncan\Documents\Visual Studio 2015\Projects\Ember\x64\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Duncan\Documents\Visual Studio 2015\Projects\EmbEngine\glew;C:\Users\Duncan\Documents\Visual Studio 2015\Projects\Ember\emb_sh;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Duncan\Documents\Visual Studio 2015\Projects\EmbEngine\glew\lib;C:\Users\Duncan\Documents\Visual Studio 2015\Projects\Ember\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -85,9 +84,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>emb_sh.lib;emb_gl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>emb_sh.lib;glew32s.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -117,15 +117,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="c_common.h" />
-    <ClInclude Include="c_core.h" />
-    <ClInclude Include="c_state.h" />
-    <ClInclude Include="c_window.h" />
+    <ClInclude Include="c_point_sprite.h" />
+    <ClInclude Include="c_wrapper.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="c_core.cpp" />
-    <ClCompile Include="c_state.cpp" />
-    <ClCompile Include="c_window.cpp" />
+    <ClCompile Include="c_wrapper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
