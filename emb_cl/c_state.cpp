@@ -3,11 +3,15 @@
 
 namespace EmbCL {
 
-	void IState::Tick( void ) {
+	void CState::Init( void ) {
 
 	}
 
-	void IState::Draw( void ) {
+	void CState::Tick( void ) {
+
+	}
+
+	void CState::Draw( void ) {
 
 	}
 

@@ -2,7 +2,7 @@
 
 #include "c_defs.h"
 
-namespace EmbCL {
+namespace Emb {
 
 	class EMB_SH_API CStopwatch {
 

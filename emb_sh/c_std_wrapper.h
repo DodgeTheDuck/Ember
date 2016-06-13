@@ -4,7 +4,7 @@
 #include <vector>
 #include <stack>
 
-namespace EmbCL {
+namespace Emb {
 
 	template<typename T> class EMB_SH_API CStack : private std::stack<T> {
 

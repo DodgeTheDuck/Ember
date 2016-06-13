@@ -1,0 +1,13 @@
+#pragma once
+
+#define RESOURCE_FOLDER "RESOURCE/"
+
+#define PATH_SHIP0 RESOURCE_FOLDER "ship.png"
+#define PATH_ASTEROID RESOURCE_FOLDER "asteroid.png"
+#define PATH_PARTICLE RESOURCE_FOLDER "particle.png"
+
+enum SPRH_BANK {
+	SPRH_SHIP0,
+	SPRH_ASTEROID,
+	SPRH_PARTICLE
+};

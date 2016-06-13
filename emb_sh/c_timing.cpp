@@ -1,7 +1,7 @@
 
 #include "c_timing.h"
 
-namespace EmbCL {
+namespace Emb {
 
 	CStopwatch::CStopwatch( void ) { };
 

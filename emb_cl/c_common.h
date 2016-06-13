@@ -5,3 +5,4 @@
 #include <c_defs.h>
 #include <c_timing.h>
 #include "c_state.h"
+#include "c_spritebank.h"

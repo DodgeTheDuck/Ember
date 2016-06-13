@@ -4,44 +4,88 @@
 
 namespace EmbCL {
 
-	CWindow::CWindow( t_rect_i bounds, t_c_pstring title, t_c_pstring uniqueId ) {
+	CWindow::CWindow( t_rect_i bounds, t_c_pstring title, t_c_pstring uniqueId, HWND parent, t_c_pstring menuName, WNDPROC wndproc ) {
 
 		WNDCLASSEX wcex;
+		WNDCLASSEXA lpwcex;
 
-		wcex.cbSize = sizeof( WNDCLASSEX );
-		wcex.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-		wcex.lpfnWndProc = _HandleEvents;
-		wcex.cbClsExtra = 0;
-		wcex.cbWndExtra = 0;
-		wcex.hInstance = EMB::hInstance;
-		wcex.hIcon = LoadIcon( EMB::hInstance, IDI_APPLICATION );
-		wcex.hCursor = LoadCursor( NULL, IDC_ARROW );
-		wcex.hbrBackground = (HBRUSH) ( COLOR_WINDOW + 1 );
-		wcex.lpszMenuName = NULL;
-		wcex.lpszClassName = uniqueId;
-		wcex.hIconSm = LoadIcon( wcex.hInstance, IDI_APPLICATION );
+		bool classExists = GetClassInfoEx( NULL, uniqueId, &lpwcex );
 
-		if( !RegisterClassEx( &wcex ) ) {
-			MessageBox( NULL, STRING( "Call to RegisterClassEx failed!" ), STRING( "RIP" ), NULL );
-			return;
+		if( !classExists ) {
+
+			wcex.cbSize = sizeof( WNDCLASSEX );
+			wcex.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+
+			if( wndproc )
+				wcex.lpfnWndProc = wndproc;
+			else
+				wcex.lpfnWndProc = _HandleEvents;
+
+			wcex.cbClsExtra = 0;
+			wcex.cbWndExtra = 0;
+			wcex.hInstance = EMB::hInstance;
+			wcex.hIcon = LoadIcon( EMB::hInstance, IDI_APPLICATION );
+			wcex.hCursor = LoadCursor( NULL, IDC_ARROW );
+			wcex.hbrBackground = (HBRUSH) ( COLOR_WINDOW + 1 );
+			wcex.lpszMenuName = menuName;
+			wcex.lpszClassName = uniqueId;
+			wcex.hIconSm = LoadIcon( wcex.hInstance, IDI_APPLICATION );
+
+			if( !RegisterClassEx( &wcex ) ) {
+				MessageBox( NULL, STRING( "Call to RegisterClassEx failed!" ), STRING( "RIP" ), NULL );
+				return;
+			}
+
+			if( !parent ) {
+				_windowHandle = CreateWindow(
+					wcex.lpszClassName,
+					title,
+					WS_OVERLAPPEDWINDOW,
+					bounds.x,
+					bounds.y,
+					bounds.w,
+					bounds.h,
+					NULL,
+					NULL,
+					EMB::hInstance,
+					NULL
+				);
+			} else {
+				_windowHandle = CreateWindow(
+					wcex.lpszClassName,
+					title,
+					WS_CHILD,
+					bounds.x,
+					bounds.y,
+					bounds.w,
+					bounds.h,
+					(HWND) parent,
+					NULL,
+					EMB::hInstance,
+					NULL
+				);
+			}
+
+		} else {
+			_windowHandle = CreateWindowEx(
+				WS_EX_CLIENTEDGE,
+				uniqueId,
+				title,
+				WS_CHILD,
+				bounds.x,
+				bounds.y,
+				bounds.w,
+				bounds.h,
+				(HWND) parent,
+				NULL,
+				EMB::hInstance,
+				NULL
+			);
 		}
 
-		_windowHandle = CreateWindow (
-			wcex.lpszClassName,
-			title,
-			WS_OVERLAPPEDWINDOW,
-			bounds.x,
-			bounds.y,
-			bounds.w,
-			bounds.h,
-			NULL,
-			NULL,
-			EMB::hInstance,
-			NULL
-		);
 
 		if( !_windowHandle ) {
-			MessageBox( NULL, STRING( "Call to CreateWindow Failed" ), STRING( "RIP" ), NULL );
+			ErrorExit( STRING( "Create Window: ") );
 			return;
 		}
 
@@ -76,13 +120,7 @@ namespace EmbCL {
 
 		SetPixelFormat( _deviceContext, pfn, &pfd );
 
-		RECT rcClient, rcWind;
-		POINT ptDiff;
-		GetClientRect( _windowHandle, &rcClient );
-		GetWindowRect( _windowHandle, &rcWind );
-		ptDiff.x = ( rcWind.right - rcWind.left ) - rcClient.right;
-		ptDiff.y = ( rcWind.bottom - rcWind.top ) - rcClient.bottom;
-		MoveWindow( _windowHandle, rcWind.left, rcWind.top, bounds.w + ptDiff.x, bounds.h + ptDiff.y, TRUE );
+		Show( );
 
 	}
 
@@ -108,6 +146,10 @@ namespace EmbCL {
 
 	HWND CWindow::GetHandle( void ) {
 		return _windowHandle;
+	}
+
+	void CWindow::Close( void ) {
+		DestroyWindow( _windowHandle );
 	}
 
 	LRESULT CWindow::_HandleEvents( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {

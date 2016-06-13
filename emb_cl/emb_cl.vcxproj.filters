@@ -27,6 +27,15 @@
     <ClInclude Include="c_window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="c_input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="c_spritebank.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="c_font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="c_core.cpp">
@@ -36,6 +45,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="c_window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="c_spritebank.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="c_font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

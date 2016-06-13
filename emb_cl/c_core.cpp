@@ -2,25 +2,55 @@
 #include "c_core.h"
 #include "c_state.h"
 #include "c_window.h"
+#include "c_input.h"
+#include <c_timing.h>
 #include <c_wrapper.h>
 
 namespace EmbCL {
 
-	S_Core::S_Core( void ) { }
+	SCore::SCore( void ) { }
 
-	void S_Core::Init( void ) {
-		CWindow * window = new CWindow( { 128, 128, 1024, 1024 }, "Ember Engine", "0" );
+	void SCore::Init( void ) {
+
+		AllocConsole( );
+		freopen( "CONOUT$", "w", stdout );
+
+		/*CWindow * window = new CWindow( { 0, 0, 1024, 1024 }, "Ember Engine", "0" );
 		_windows.Push( window );
-		_windows[0]->Show( );
-		EmbR::Init( _windows[0]->GetHandle( ) );
+		_windows[0]->Show( );*/
+		EmbR::Init( );
+
+		_states.top( )->Init( );
+
+		_frameTimer = CStopwatch( );
+		_frameTimer.Start( );
+
 	}
 
-	void S_Core::Run( void ) {
+	void SCore::Run( void ) {
 
-		while( true ) {
+		while( IsWindow( _windows[0]->GetHandle( ) ) ) {
 
-			_Tick( );
-			_Draw( );
+			_frameTimer.Stop( );
+			_frameDeltaAccumulator += _frameTimer.Read( ) / 1000.0;
+			_secondCounter += _frameTimer.Read( );
+			_frameTimer.Reset( );
+			_frameTimer.Start( );
+
+			t_real updateThreshold = ( 1.0 / TARGET_FPS ) ;
+			
+			if( _frameDeltaAccumulator >= updateThreshold ) {
+				_Tick( );
+				_Draw( );
+				_frameDeltaAccumulator = 0;
+				_frameCount++;
+			}
+
+			if( _secondCounter > 1000.0 ) {
+				std::cout << "FPS: " << _frameCount << std::endl;
+				_frameCount = 0;
+				_secondCounter = 0;
+			}
 
 			MSG msg;
 
@@ -29,36 +59,37 @@ namespace EmbCL {
 				DispatchMessage( &msg );
 			}
 
-			//_windows[0]->Update( );
+			_windows[0]->Update( );
 
 		}
 
 	}
 
-	void S_Core::Shutdown( void ) {
+	void SCore::Shutdown( void ) {
 
 	}
 
-	void S_Core::_Tick( void ) {
-		_states.Top( )->Tick( );
+	void SCore::_Tick( void ) {
+		SControls::GetInstance( ).Update( _windows[0] );
+		_states.top( )->Tick( );
 	}
 
-	void S_Core::_Draw( void ) {
+	void SCore::_Draw( void ) {
 		EmbR::Clear( );
-		_states.Top( )->Draw( );
+		_states.top( )->Draw( );
 		EmbR::Swap( );
 	}
 
-	CStack<IState*>& S_Core::StateManager( void ) {
+	std::stack<CState*>& SCore::StateManager( void ) {
 		return _states;
 	}
 
-	CArray<CWindow*>& S_Core::WindowManager( void ) {
+	std::vector<CWindow*>& SCore::WindowManager( void ) {
 		return _windows;
 	}
 
-	S_Core& S_Core::GetInstance( void ) {
-		static S_Core instance;
+	SCore& SCore::GetInstance( void ) {
+		static SCore instance;
 		return instance;
 	}
 
