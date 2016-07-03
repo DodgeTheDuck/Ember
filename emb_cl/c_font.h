@@ -17,7 +17,7 @@ class CFont {
 
 	public:
 	CFont( const SFontInfo& info );
-	void DrawString( t_real x, t_real y, std::string s );
+	void DrawString( t_real x, t_real y, std::string s, t_real scale = 1.0 );
 
 	private:
 	SFontInfo _info;

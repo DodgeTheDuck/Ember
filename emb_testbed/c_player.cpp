@@ -8,6 +8,7 @@
 #include "c_hull.h"
 #include "c_emitter.h"
 #include "c_shield.h"
+#include "c_weapon.h"
 
 CPlayer::CPlayer( void ) {
 	Init( );
@@ -36,18 +37,19 @@ void CPlayer::Init( void ) {
 	emit.count = 0;
 	emit.target = { 0, 0 };
 
-	_shield = new CShield( );
-
-	entMan.Add( _shield );
+	//_shield = new CShield( );
+	//entMan.Add( _shield );
 
 	_thruster = new CEmitter( { 512, 512 }, emit, info );
-
 	entMan.Add( _thruster );
 
-	_sprite = CSpriteBank::GetInstance( ).Get( SPRH_SHIP0 );
+	_weapon = new CWepBlaster( );
+
+	AllocateSprites( 1 );
+	_sprite[0] = CSpriteBank::GetInstance( ).Get( SPRH_SHIP0 );
 
 	_rigidBody.hull = new CHullCircle( 40, &_rigidBody.transform );
-	_rigidBody.mass = 25;
+	_rigidBody.mass = 200;
 	_rigidBody.SetTag( 1 );
 
 }
@@ -58,7 +60,7 @@ void CPlayer::Tick( void ) {
 
 	if( _reloading ) _reloadTimer++;
 
-	if( _reloadTimer >= TARGET_FPS / 4 ) {
+	if( _reloadTimer >= TARGET_FPS / 16 ) {
 		_reloading = false;
 		_reloadTimer = 0;
 	}
@@ -67,26 +69,17 @@ void CPlayer::Tick( void ) {
 	if( controls.TestControl( EmbCL::CN_backward ) ) _rigidBody.Impulse( -0.02, _rigidBody.Forward( ) );
 	if( controls.TestControl( EmbCL::CN_strafe_left ) ) _rigidBody.Impulse( 0.02, _rigidBody.Forward( ), { -1, 1 } );
 	if( controls.TestControl( EmbCL::CN_strafe_right ) ) _rigidBody.Impulse( 0.02, _rigidBody.Forward( ), { 1, 1 } );
-	if( controls.TestControl( EmbCL::CN_fire ) && !_reloading ) {
-		Vector2 from = _rigidBody.transform._position;
-		from.x += cos( Math::Radians( _rigidBody.Forward( ) ) ) * 44;
-		from.y += sin( Math::Radians( _rigidBody.Forward( ) ) ) * 44;
-		CEntMan::GetInstance( ).Add( new CProjectile( from, _rigidBody.Forward( ) ) );
-		_reloading = true;
-	}
+	if( controls.TestControl( EmbCL::CN_fire ) ) { _weapon->Fire( _rigidBody ); } else { _weapon->Wait( ); }
 
 	_thruster->SetDirection( _rigidBody.Forward( ) - 180 );
 	_thruster->SetPosition( _rigidBody.transform._position + Vector2( cos( Math::Radians( _rigidBody.Forward( ) ) ) * -60, sin( Math::Radians( _rigidBody.Forward( ) ) ) * -60 ) );
 
-	_shield->SetPosition( _rigidBody.transform._position );
+	if( _shield ) _shield->SetPosition( _rigidBody.transform._position );
 
 	CEntity::Tick( );
 
 }
 
 void CPlayer::Draw( void ) {
-
-	_shield->Draw( );
-
 	CEntity::Draw( );
 }

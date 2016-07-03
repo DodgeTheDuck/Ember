@@ -6,6 +6,7 @@
 
 class CShield;
 class CEmitter;
+class CWeapon;
 
 class CPlayer : public CEntity {
 
@@ -22,5 +23,6 @@ class CPlayer : public CEntity {
 	t_real _reloadTimer;
 	CEmitter * _thruster;
 	CShield * _shield;
+	CWeapon * _weapon;
 
 };

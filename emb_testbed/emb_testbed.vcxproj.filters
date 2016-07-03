@@ -54,6 +54,15 @@
     <ClCompile Include="c_shield.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="c_weapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="c_collision_solver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="c_laser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="c_test_state.h">
@@ -96,6 +105,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="c_shield.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="c_weapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="c_collision_solver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="c_laser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

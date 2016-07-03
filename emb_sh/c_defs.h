@@ -7,6 +7,9 @@
 #include <strsafe.h>
 #include <random>
 
+#define WINDOW_W 1600
+#define WINDOW_H 1024
+
 #define EMB_CL_API	__declspec( dllexport )
 #define EMB_SH_API  __declspec( dllexport )
 #define EMB_R_API	__declspec( dllexport )
@@ -33,6 +36,7 @@ typedef const std::wstring		t_c_wstring;
 typedef LPCSTR					t_c_pstring;
 
 typedef BYTE					t_byte;
+typedef unsigned char			t_ubyte;
 
 struct t_rect_i {
 	t_rect_i( t_int32 x = 0, t_int32 y = 0, t_int32 w = 0, t_int32 h = 0 ) :
@@ -105,6 +109,7 @@ struct Vector2 {
 	void		operator-=( const Vector2& rhs ) { x -= rhs.x; y -= rhs.y; };
 
 	Vector2		operator*( const t_real& rhs ) { return { x * rhs, y * rhs }; }
+	Vector2		operator/( const Vector2& rhs ) { return { x / rhs.x, rhs.y / rhs.y }; }
 
 };
 
@@ -197,7 +202,7 @@ struct Vertex3 {
 struct Transform2D {
 	Vector2		_position = { 0, 0 };
 	t_real		_angle = 0;
-	t_real		_scale = 1.0;
+	Vector2		_scale = { 1.0, 1.0 };
 };
 
 namespace Math {

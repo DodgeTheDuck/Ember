@@ -13,6 +13,8 @@ void CShader::LoadFromFile( const char * path, SHADER_TYPE type ) {
 
 	LoadFromString( buffer.str( ), type );
 
+	t.close( );
+
 }
 
 void CShader::LoadFromString( std::string shader, SHADER_TYPE type ) {
@@ -99,6 +101,21 @@ void CShader::UniformVec4( const char * varName, float data[4] ) {
 	glUniform4f( id, data[0], data[1], data[2], data[3] );
 }
 
+void CShader::UniformVec3( const char * varName, float data[3] ) {
+	GLint id = glGetUniformLocation( _program, varName );
+	glUniform3f( id, data[0], data[1], data[2] );
+}
+
+void CShader::UniformVec2( const char * varName, float data[2] ) {
+	GLint id = glGetUniformLocation( _program, varName );
+	glUniform2f( id, data[0], data[1] );
+}
+
+void CShader::UniformVec2( const char * varName, float d0, float d1 ) {
+	GLint id = glGetUniformLocation( _program, varName );
+	glUniform2f( id, d0, d1 );
+}
+
 void CShader::UniformVec4( const char * varName, t_color4_r data ) {
 	GLint id = glGetUniformLocation( _program, varName );
 	glUniform4f( id, (GLfloat)data.r, (GLfloat) data.g, (GLfloat) data.b, (GLfloat) data.a );
@@ -110,6 +127,11 @@ void CShader::UniformVec4( const char * varName, t_color4_r data ) {
 }*/
 
 void CShader::UniformUInt( const char * varName, t_uint sampler ) {
+	GLint id = glGetUniformLocation( _program, varName );
+	glUniform1ui( id, sampler );
+}
+
+void CShader::UniformInt( const char * varName, t_int32 sampler ) {
 	GLint id = glGetUniformLocation( _program, varName );
 	glUniform1i( id, sampler );
 }

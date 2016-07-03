@@ -37,7 +37,9 @@ CProjectile::CProjectile( Vector2 pos, t_real direction ) : CEntity( ) {
 }
 
 void CProjectile::Init( void ) {
-	_sprite = CSpriteBank::GetInstance( ).Get( SPRH_PARTICLE );
+	AllocateSprites( 1 );
+	_sprite[0] = CSpriteBank::GetInstance( ).Get( SPRH_PARTICLE );
+	_sprite[0]->SetColor( { 1.0, 1.0, 0.3, 1.0 } );
 	_rigidBody.hull = new CHullCircle( 4, &_rigidBody.transform );
 }
 

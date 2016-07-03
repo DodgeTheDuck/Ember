@@ -48,6 +48,7 @@ namespace EmbCL {
 
 			if( _secondCounter > 1000.0 ) {
 				std::cout << "FPS: " << _frameCount << std::endl;
+				_lastFPS = _frameCount;
 				_frameCount = 0;
 				_secondCounter = 0;
 			}
@@ -75,9 +76,10 @@ namespace EmbCL {
 	}
 
 	void SCore::_Draw( void ) {
+		EmbR::BeginFrame( );
 		EmbR::Clear( );
 		_states.top( )->Draw( );
-		EmbR::Swap( );
+		EmbR::EndFrame( );
 	}
 
 	std::stack<CState*>& SCore::StateManager( void ) {
@@ -91,6 +93,10 @@ namespace EmbCL {
 	SCore& SCore::GetInstance( void ) {
 		static SCore instance;
 		return instance;
+	}
+
+	t_real SCore::GetFPS( void ) {
+		return _lastFPS;
 	}
 
 }

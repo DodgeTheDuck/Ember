@@ -9,7 +9,6 @@ uniform mat4 gl_ProjectionMatrix;
 out vec2 in_UV;
 
 void main(void) {
-	in_UV = vertexUV;
-
+	in_UV = vec2( vertexUV.x, 1.0-vertexUV.y ) ;
     gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * vec4( vertexP, 1.0 );
 }

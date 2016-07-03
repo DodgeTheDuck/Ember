@@ -7,7 +7,7 @@ std::vector<CSprite*> CSpriteBank::_bank;
 
 t_spriteHandle CSpriteBank::Load( const char * filepath ) {
 	CSprite * sprite = new CSprite( );
-	sprite->CreateFromImage( Emb::CImage( filepath ) );
+	sprite->CreateFromImage( filepath );
 	return Add( sprite );
 }
 

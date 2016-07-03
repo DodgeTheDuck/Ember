@@ -15,10 +15,14 @@ class CShader {
 	void Link( void );
 
 	//void UniformMat4x4( const char * varName, Mat4x4 &mat );
-	void UniformUInt( const char * varName, t_uint sampler );
-	void UniformFloat( const char * varName, float sampler );
+	void UniformUInt( const char * varName, t_uint value );
+	void UniformInt( const char * varName, t_int32 value );
+	void UniformFloat( const char * varName, float value );
 	void UniformVec4( const char * varName, float data[4] );
 	void UniformVec4( const char * varName, t_color4_r data );
+	void UniformVec2( const char * varName, float data[2] );
+	void UniformVec2( const char * varName, float d0, float d1 );
+	void UniformVec3( const char * varName, float data[3] );
 
 	void Enable( void );
 	void Disable( void );

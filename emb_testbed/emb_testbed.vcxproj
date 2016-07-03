@@ -131,26 +131,31 @@
   <ItemGroup>
     <ClCompile Include="c_asteroid.cpp" />
     <ClCompile Include="c_camera.cpp" />
+    <ClCompile Include="c_collision_solver.cpp" />
     <ClCompile Include="c_emitter.cpp" />
     <ClCompile Include="c_entity.cpp" />
     <ClCompile Include="c_entman.cpp" />
     <ClCompile Include="c_fire.cpp" />
     <ClCompile Include="c_hull.cpp" />
+    <ClCompile Include="c_laser.cpp" />
     <ClCompile Include="c_particle.cpp" />
     <ClCompile Include="c_player.cpp" />
     <ClCompile Include="c_projectile.cpp" />
     <ClCompile Include="c_rigidBody.cpp" />
     <ClCompile Include="c_shield.cpp" />
     <ClCompile Include="c_test_state.cpp" />
+    <ClCompile Include="c_weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="c_asteroid.h" />
     <ClInclude Include="c_camera.h" />
+    <ClInclude Include="c_collision_solver.h" />
     <ClInclude Include="c_emitter.h" />
     <ClInclude Include="c_fire.h" />
     <ClInclude Include="c_hull.h" />
     <ClInclude Include="c_entity.h" />
     <ClInclude Include="c_entman.h" />
+    <ClInclude Include="c_laser.h" />
     <ClInclude Include="c_particle.h" />
     <ClInclude Include="c_player.h" />
     <ClInclude Include="c_projectile.h" />
@@ -158,6 +163,7 @@
     <ClInclude Include="c_rigidBody.h" />
     <ClInclude Include="c_shield.h" />
     <ClInclude Include="c_test_state.h" />
+    <ClInclude Include="c_weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

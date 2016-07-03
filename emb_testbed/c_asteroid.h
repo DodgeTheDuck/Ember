@@ -9,5 +9,6 @@ class CAsteroid : public CEntity {
 	virtual void Init( void );
 	virtual void Tick( void );
 	virtual void Draw( void );
+	virtual void OnCollision( s_colInfo * info );
 
 };

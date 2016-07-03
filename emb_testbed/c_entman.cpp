@@ -22,7 +22,7 @@ void CEntMan::Tick( void ) {
 
 	for( t_uint i = 0; i < _entities.size( ); i++ ) {
 		CEntity * entity = _entities[i];
-		entity->Tick( );
+		if( entity->IsEnabled( ) ) entity->Tick( );
 	}
 
 }
@@ -33,7 +33,8 @@ void CEntMan::Kill( CEntity * entity ) {
 
 void CEntMan::Draw( void ) {
 	for( t_uint i = 0; i < _entities.size( ); i++ ) {
-		_entities[i]->Draw( );
+		CEntity * entity = _entities[i];
+		if( entity->IsEnabled( ) ) entity->Draw( );
 	}
 }
 

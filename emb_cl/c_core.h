@@ -28,6 +28,7 @@ namespace EmbCL {
 		void Init( void );
 		void Run( void );
 		void Shutdown( void );
+		t_real GetFPS( void );
 
 		EMB_CL_API std::stack<CState*>& StateManager( void );
 		EMB_CL_API std::vector<CWindow*>& WindowManager( void );
@@ -46,6 +47,7 @@ namespace EmbCL {
 		t_real				_frameDeltaAccumulator;
 		t_int32				_frameCount;
 		t_real				_secondCounter;
+		t_real				_lastFPS;
 
 		public:
 		SCore( const SCore& ) = delete;

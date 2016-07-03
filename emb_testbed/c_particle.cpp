@@ -8,11 +8,10 @@ CParticle::CParticle( const SPartInfo& info ) : CEntity( ) {
 	_life = Math::RandomRange( info.minLifespan, info.maxLifespan );
 	_grav = Math::RandomRange( info.minGrav, info.maxGrav );
 	_gravDir = Math::RandomRange( info.minGravDir, info.maxGravDir );
-	_rigidBody.transform._scale = Math::RandomRange( info.minScale, info.maxScale );
+	t_real scale = Math::RandomRange( info.minScale, info.maxScale );
+	_rigidBody.transform._scale = { scale, scale };
 
 	_span = _life;
-
-	_sprite = CSpriteBank::GetInstance( ).Get( SPRH_PARTICLE );
 
 	_start = {
 		info.startColor.r + Math::RandomRange( -info.startVariance.r, info.startVariance.r ),
@@ -28,7 +27,10 @@ CParticle::CParticle( const SPartInfo& info ) : CEntity( ) {
 		info.endColor.a + Math::RandomRange( -info.endVariance.a, info.endVariance.a )
 	};
 
-	_sprite->SetBlendMode( info.mode );
+	AllocateSprites( 1 );
+
+	_sprite[0] = CSpriteBank::GetInstance( ).Get( SPRH_PARTICLE );
+	_sprite[0]->SetBlendMode( info.mode );
 
 }
 
@@ -41,7 +43,7 @@ void CParticle::Tick( void ) {
 	if( _life <= 0 ) CEntMan::GetInstance( ).Kill( this );
 	_life--;
 	
-	_sprite->SetColor(
+	_sprite[0]->SetColor(
 		Math::Interp1( _span, _life, _end.r, _start.r ),
 		Math::Interp1( _span, _life, _end.g, _start.g ),
 		Math::Interp1( _span, _life, _end.b, _start.b ),

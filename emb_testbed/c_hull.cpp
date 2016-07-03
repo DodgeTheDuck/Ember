@@ -33,7 +33,7 @@ e_hullType CHull::GetType( void ) {
 
 s_colInfo * CHullCircle::Test( CRigidBody * self, CRigidBody * other ) {
 
-	if( self->GetTag( ) == other->GetTag( ) ) return NULL;
+	//if( self->GetTag( ) == other->GetTag( ) ) return NULL;
 
 	Vector2 centre0 = _transform->_position;
 	Vector2 centre1 = other->transform._position;

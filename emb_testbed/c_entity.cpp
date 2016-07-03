@@ -4,7 +4,7 @@
 #include "c_entman.h"
 
 CEntity::CEntity( void ) {
-
+	_enabled = true;
 }
 
 void CEntity::Init( void ) {
@@ -23,9 +23,10 @@ void CEntity::SetPosition( Vector2 newPosition ) {
 
 void CEntity::Draw( void ) {
 	EmbR::PushTransform( _rigidBody.transform );
-	if( _sprite ) _sprite->Draw( );
+	for( t_uint i = 0; i < _spriteCount; i++ ) {
+		if( _sprite[i] ) _sprite[i]->Draw( );
+	}
 	EmbR::PopTransform( );
-	//if( _rigidBody.hull ) _rigidBody.hull->Draw( );
 }
 
 void CEntity::OnCollision( s_colInfo * info ) {
@@ -34,6 +35,23 @@ void CEntity::OnCollision( s_colInfo * info ) {
 
 CRigidBody& CEntity::GetRigidBody( void ) {
 	return _rigidBody;
+}
+
+void CEntity::Disable( void ) {
+	_enabled = false;
+}
+
+void CEntity::Enable( void ) {
+	_enabled = true;
+}
+
+bool CEntity::IsEnabled( void ) {
+	return _enabled;
+}
+
+void CEntity::AllocateSprites( t_uint count ) {
+	_sprite = (CSprite**)calloc( count, sizeof( CSprite* ) );
+	_spriteCount = count;
 }
 
 CEntity::~CEntity( void ) {

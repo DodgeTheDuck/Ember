@@ -7,12 +7,19 @@
 
 CFont::CFont( const SFontInfo& info ) {
 
-	Emb::CImage image = Emb::CImage( info.bmpPath );
-	t_size2D_i imageSize = image.GetSize( );
-	hTex tex = EmbR::GenTexture( image );
+	Emb::CImage * image = new Emb::CImage( info.bmpPath );
+	t_size2D_i imageSize = image->GetSize( );
 
-	t_real pw = 1.0 / (t_real)imageSize.w;
-	t_real ph = 1.0 / (t_real)imageSize.h;
+	s_info_texture texInfo;
+	texInfo.internalFormat = EMBR_RGBA;
+	texInfo.externalFormat = EMBR_RGBA;
+	texInfo.interpolation = EMBR_NEAREST;
+	texInfo.image = image;
+
+	hTex tex = EmbR::GenTexture( texInfo );
+
+	t_real pw = 1.0 / ( (t_real) imageSize.w + 1 );
+	t_real ph = 1.0 / ( (t_real) imageSize.h + 1 );
 
 	_characters = (hEMDL*) calloc( info.cols * info.rows, sizeof( hEMDL ) );
 
@@ -47,10 +54,11 @@ CFont::CFont( const SFontInfo& info ) {
 
 }
 
-void CFont::DrawString( t_real x, t_real y, std::string s ) {
+void CFont::DrawString( t_real x, t_real y, std::string s, t_real scale ) {
 
 	Transform2D t0;
 	t0._position = { x, y };
+	t0._scale = { scale, scale };
 
 	EmbR::PushTransform( t0 );
 	for( t_uint i = 0; i < s.size( ); i++ ) {
